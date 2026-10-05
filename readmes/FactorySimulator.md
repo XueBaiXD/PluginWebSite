@@ -1,0 +1,709 @@
+# FactorySimulator｜工厂模拟器
+
+FactorySimulator 是一个轻量 RPG 工厂经营插件。玩家可以创建自己的工厂世界，摆放并连接生产设备，出售产物赚取资金，升级工厂地皮与设备，逐步建设自动化生产线。
+
+> 当前版本：`1.1.1`
+
+> 作者：`XueBaiXD` `gjyyds1`
+
+> QQ：3987575641
+
+> 本插件已经开源
+
+https://github.com/XueBaiXD/FactorySimulator
+
+https://modrinth.com/plugin/factorysimulator
+
+## 目录
+
+- [插件特色](#插件特色)
+- [运行环境](#运行环境)
+- [安装与首次使用](#安装与首次使用)
+- [命令与权限](#命令与权限)
+- [生产线与设备](#生产线与设备)
+- [PlaceholderAPI 变量](#placeholderapi-变量)
+- [前置插件与软依赖](#前置插件与软依赖)
+- [配置文件](#配置文件)
+- [数据存储](#数据存储)
+- [目录结构与备份](#目录结构与备份)
+- [常见问题](#常见问题)
+
+## 插件特色
+
+- **专属工厂世界**：玩家创建工厂后拥有独立的工厂世界，世界名称格式为 `fs_<去除短横线后的玩家UUID>`。
+- **预设工厂场地**：世界由插件按 `world.yml` 生成，包含地板、中心标记和边界墙，地皮大小由 `factory.yml` 控制。
+- **流水线生产**：基础采矿机、矿物采矿机、传送带、熔炼机、装配机、仓储箱和自动售货机可以组合成生产线。
+- **RPG 成长**：资金达到配置的升级条件后提升工厂等级，解锁更多设备并升级地皮规模。
+- **离线收益**：玩家离线期间会根据配置记录离线收益，回到服务器后计入工厂数据。
+- **工厂资料**：支持自定义工厂名称、工厂信息查询、设备数量和工人数等资料统计。
+- **成就数据**：工厂资料保存成就集合，并可在消息与 PlaceholderAPI 中使用统计信息。
+- **排行榜接口**：支持按资金和工厂等级计算玩家名次，便于接入全息、记分板或其他展示插件。
+- **多种存储**：支持 YAML、SQLite 和 MySQL 三种存储方式。
+- **批量商店购买**：点击设备商店中的设备后，可在聊天框输入购买数量，一次购买多个设备。
+- **管理员发放**：管理员可以指定在线玩家和发放数量，批量发放设备。
+- **工人经营**：支持雇佣、解雇工人，并配置工人上限、雇佣费用和解雇返还比例。
+- **设备成长**：可以升级准星指向的自有设备，设备等级、升级费用和最大等级均可配置。
+- **成就系统**：自动记录设备、资金、工人、地皮和工厂等级等成长成就。
+- **排行榜**：支持按资金和工厂等级查看排行榜，并可通过 PlaceholderAPI 或全息插件展示。
+- **软依赖设计**：PlaceholderAPI、Vault、HolographicDisplays、Multiverse-Core 均为软依赖，不安装时插件仍可启动核心功能。
+- **中文/繁中/英文语言**：通过 `messages.yml` 选择 `zh_cn`、`zh_tw` 或 `en` 语言文件。
+
+## 运行环境
+
+### 必需环境
+
+- Minecraft `1.12.2` (推荐的Minecraft版本)
+- Paper `1.12.2`（推荐使用 Paper，不建议使用原版 Spigot）
+- Java `8` 或与当前服务端兼容的 Java 运行环境
+
+### 可选前置
+
+| 插件 | 用途 | 是否必需 |
+| --- | --- | --- |
+| PlaceholderAPI | 提供工厂变量，供记分板、TAB、聊天、全息等插件调用 | 否 |
+| Vault | 经济生态兼容入口及状态识别 | 否 |
+| HolographicDisplays | 全息展示生态兼容入口及状态识别 | 否 |
+| Multiverse-Core | 多世界生态兼容入口及状态识别 | 否 |
+
+插件已经在 `plugin.yml` 中将上述插件声明为 `softdepend`。缺少任意一个插件不会阻止 FactorySimulator 启动。
+
+## 安装与首次使用
+
+1. 将 `FactorySimulator.jar` 放入服务端的 `plugins/` 目录。
+2. 启动一次服务器，等待插件生成默认配置和语言文件。
+3. 如需使用变量展示，额外安装 PlaceholderAPI，并执行 `/papi ecloud download` 等方式安装所需的其他扩展。
+4. 根据需要编辑 `plugins/FactorySimulator/` 下的配置文件。
+5. 重启服务器，或使用 `/fs reload` 重新加载可热重载配置。
+6. 玩家进入服务器后执行：
+
+   ```text
+   /fs create
+   /fs enter
+   ```
+
+创建工厂时会获得默认启动设备、工厂拆卸镐和教程书。具体数量由 `factory.yml` 的 `starter` 节点控制。
+
+### 推荐的新手流程
+
+1. 使用 `/fs create` 创建工厂。
+2. 使用 `/fs enter` 进入专属工厂世界。
+3. 摆放基础采矿机、传送带和自动售货机。
+4. 将采矿机接入传送带，并将传送带末端连接到自动售货机。
+5. 等待生产并出售产物，使用 `/fs info` 查看资金、等级和设备数量。
+6. 使用 `/fs buy <设备ID> [数量]` 购买更高级设备；也可以从教程书打开设备商店，点击设备后在聊天框输入购买数量。
+7. 使用 `/fs upgrade` 扩大地皮，继续扩建生产区域。
+
+## 命令与权限
+
+主命令为 `/fs`，别名为 `/factory` 和 `/factorysimulator`。`/factorysimulator` 也注册为独立命令入口，可用于执行主命令的查询功能。
+
+### 玩家命令
+
+| 命令 | 说明 |
+| --- | --- |
+| `/fs` | 查看帮助 |
+| `/fs help` | 查看帮助 |
+| `/fs version` | 查看插件版本 |
+| `/fs create` | 创建自己的工厂 |
+| `/fs enter` | 进入自己的工厂世界 |
+| `/fs menu` | 查看教程菜单提示；教程内容通过教程书打开 |
+| `/fs rename <工厂名称>` | 修改自己的工厂名称 |
+| `/fs upgrade` | 升级工厂地皮 |
+| `/fs workers info` | 查看工人数量、上限和雇佣费用 |
+| `/fs workers hire` | 雇佣一名工人 |
+| `/fs workers fire` | 解雇一名工人并返还部分费用 |
+| `/fs machine upgrade` | 升级准星指向的自有设备 |
+| `/fs buy <设备ID> [数量]` | 购买指定数量的设备并放入背包；数量范围为 `1-2304` |
+| `/fs top` | 查看资金排行榜 |
+| `/fs top level` | 查看工厂等级排行榜 |
+| `/fs info` | 查看自己的工厂信息 |
+| `/fs info <玩家名或UUID>` | 查看指定玩家的工厂信息 |
+| `/fs info server` | 查看服务器状态 |
+| `/fs status` | 查看服务器状态 |
+| `/fs server` | 查看服务器状态 |
+
+### 管理员命令
+
+| 命令 | 说明 | 权限 |
+| --- | --- | --- |
+| `/fs reload` | 重新加载插件配置与语言 | `factorysimulator.admin` |
+| `/fs machine give <设备ID> [数量]` | 给自己发放设备（兼容旧格式） | `factorysimulator.admin` |
+| `/fs machine give <玩家> <设备ID> [数量]` | 给指定在线玩家发放指定数量的设备 | `factorysimulator.admin` |
+
+`factorysimulator.admin` 默认仅授予 OP。`reload` 和 `machine give` 会显式检查该权限；发放数量范围为 `1-2304`。指定玩家必须在线。
+
+### 商店批量购买
+
+在教程书打开主菜单后，进入“设备商店”并点击要购买的设备。商店会关闭并提示你在聊天框输入数量：
+
+```text
+1-2304       购买对应数量
+cancel        取消本次购买
+```
+
+购买会按照设备单价乘以数量一次性结算；也可以直接使用 `/fs buy <设备ID> [数量]`。
+
+## 生产线与设备
+
+设备物品通过隐藏 Lore 标识识别。不要手动删除设备 Lore，否则插件可能无法识别该物品。
+
+| 设备 ID | 名称 | 默认材质 | 默认价格 | 解锁等级 |
+| --- | --- | --- | ---: | ---: |
+| `basic_miner` | 基础采矿机 | `DISPENSER` | 100 | 1 |
+| `coal_miner` | 煤炭采矿机 | `DROPPER` | 300 | 2 |
+| `iron_miner` | 铁矿采矿机 | `DISPENSER` | 800 | 4 |
+| `gold_miner` | 黄金采矿机 | `DISPENSER` | 1600 | 6 |
+| `redstone_miner` | 红石采矿机 | `DROPPER` | 2200 | 7 |
+| `diamond_miner` | 钻石采矿机 | `DISPENSER` | 5000 | 10 |
+| `conveyor` | 传送带 | `HOPPER` | 50 | 1 |
+| `smelter` | 工业熔炼机 | `FURNACE` | 500 | 2 |
+| `assembler` | 自动装配机 | `DROPPER` | 1200 | 5 |
+| `electric_furnace` | 电力熔炉 | `FURNACE` | 1800 | 6 |
+| `fuel_generator` | 燃料发电机 | `REDSTONE_BLOCK` | 1500 | 6 |
+| `storage` | 物流仓储箱 | `CHEST` | 350 | 2 |
+| `seller` | 自动售货机 | `CHEST` | 250 | 2 |
+
+价格与解锁等级都可以在 `factory.yml` 的 `shop.items.<设备ID>` 中调整。
+
+### 推荐连接方式
+
+```text
+采矿机 → 传送带 → 物流仓储箱 → 传送带 → 自动售货机
+铁矿采矿机 → 工业熔炼机 → 自动装配机 → 自动售货机
+煤炭采矿机 → 传送带 → 物流仓储箱 → 自动售货机
+```
+
+- `conveyor` 用于连接采矿机、加工设备、仓储箱和售货机。
+- `storage` 适合作为生产区与加工区之间的缓冲。
+- `smelter`、`assembler`、`electric_furnace` 用于加工矿物或生产更高价值产物。
+- `seller` 建议放在线路末端，用于自动出售工厂产出。
+- `fuel_generator` 建议与采矿区、加工区分区摆放。
+
+设备是否在拆除时掉落，以及设备物品标识由 `factory.yml` 的 `machines` 节点控制。工厂拆卸镐仅用于拆除自己工厂内的设备。
+
+### 默认售卖价格
+
+| 产物 | 默认价格 |
+| --- | ---: |
+| `iron_ore` | 20.0 |
+| `coal` | 12.0 |
+| `iron_ingot` | 35.0 |
+| `gold_ore` | 45.0 |
+| `gold_ingot` | 75.0 |
+| `redstone` | 18.0 |
+| `diamond` | 180.0 |
+| `factory_product` | 120.0 |
+| `advanced_component` | 300.0 |
+
+基础产品价格由 `production.basic-sell-price` 控制，具体产物价格由 `production.sell-prices` 控制。
+
+## PlaceholderAPI 变量
+
+安装并启用 PlaceholderAPI，且 `features.yml` 中 `hooks.placeholderapi` 为 `true` 后，插件会注册扩展标识：
+
+```text
+factorysimulator
+```
+
+变量格式：
+
+```text
+%factorysimulator_<变量名>%
+```
+
+### 全部变量
+
+| 变量 | 返回内容 |
+| --- | --- |
+| `%factorysimulator_money%` | 当前玩家工厂资金，保留两位小数 |
+| `%factorysimulator_balance%` | `money` 的别名 |
+| `%factorysimulator_level%` | 当前玩家工厂等级 |
+| `%factorysimulator_factory_level%` | `level` 的别名 |
+| `%factorysimulator_factory_name%` | 当前玩家工厂名称 |
+| `%factorysimulator_name%` | `factory_name` 的别名 |
+| `%factorysimulator_plot_size%` | 当前玩家地皮边长 |
+| `%factorysimulator_size%` | `plot_size` 的别名 |
+| `%factorysimulator_workers%` | 当前工人数 |
+| `%factorysimulator_worker_count%` | `workers` 的别名 |
+| `%factorysimulator_machines%` | 当前已放置设备数量 |
+| `%factorysimulator_machine_count%` | `machines` 的别名 |
+| `%factorysimulator_created%` | 是否已创建工厂，返回 `true` 或 `false` |
+| `%factorysimulator_rank_money%` | 按资金排序的当前玩家名次 |
+| `%factorysimulator_rank_level%` | 按工厂等级排序的当前玩家名次 |
+| `%factorysimulator_rank%` | `rank_money` 的别名，按资金排序的当前玩家名次 |
+| `%factorysimulator_achievements%` | 当前玩家已获得的成就数量 |
+| `%factorysimulator_achievement_count%` | `achievements` 的别名 |
+| `%factorysimulator_offline_money%` | 当前记录的离线收益金额 |
+
+### 使用示例
+
+在支持 PlaceholderAPI 的记分板、TAB、聊天格式或全息插件中填写：
+
+```text
+资金：%factorysimulator_money%
+等级：%factorysimulator_level%
+工厂：%factorysimulator_factory_name%
+地皮：%factorysimulator_plot_size%x%factorysimulator_plot_size%
+工人：%factorysimulator_workers%
+设备：%factorysimulator_machines%
+资金排名：#%factorysimulator_rank_money%
+```
+
+使用 PlaceholderAPI 的 `/papi parse` 检查变量：
+
+```text
+/papi parse me %factorysimulator_money%
+/papi parse me %factorysimulator_factory_name%
+```
+
+如果变量原样显示，依次检查 PlaceholderAPI 是否安装、插件是否启用、`features.yml` 是否开启 `hooks.placeholderapi`，以及重启服务器让软依赖重新检测。
+
+## 前置插件与软依赖
+
+### PlaceholderAPI
+
+PlaceholderAPI 是最推荐安装的前置，用于把工厂数据展示到其他插件中。FactorySimulator 自带 `factorysimulator` 扩展，不需要另外下载同名扩展。
+
+安装后：
+
+1. 将 PlaceholderAPI 放入 `plugins/`。
+2. 确认 `features.yml`：
+
+   ```yaml
+   hooks:
+     placeholderapi: true
+   ```
+
+3. 重启服务器。
+4. 使用上方变量配置记分板、TAB、聊天或全息插件。
+
+### Vault
+
+Vault 是经济插件的通用桥接前置。当前 FactorySimulator 的核心工厂资金由自身工厂资料和存储系统管理；Vault 在本版本中作为可选兼容入口和状态识别，不是创建工厂或生产线运行的硬性要求。
+
+如服务器已有 Vault，可保持：
+
+```yaml
+hooks:
+  vault: true
+```
+
+如不使用 Vault，可关闭该开关：
+
+```yaml
+hooks:
+  vault: false
+```
+
+### HolographicDisplays
+
+HolographicDisplays 用于服务器外部的全息展示生态。FactorySimulator 提供自身变量，管理员可以在 HolographicDisplays 的全息文本中直接使用 PlaceholderAPI 变量，例如：
+
+```text
+&b工厂排行榜
+&f资金：%factorysimulator_money%
+&f等级：%factorysimulator_level%
+```
+
+全息插件本身的创建、编辑和删除命令请以对应版本的 HolographicDisplays 文档为准。FactorySimulator 不要求必须安装该插件。
+
+### Multiverse-Core
+
+Multiverse-Core 是多世界管理生态的可选前置。FactorySimulator 会自行管理玩家工厂世界的生成和加载；Multiverse-Core 不是创建工厂世界的必需组件。安装 Multiverse-Core 后可继续使用其世界管理、传送和世界列表功能，但不要重复导入或手动删除 FactorySimulator 正在使用的工厂世界。
+
+### 关闭可选接入
+
+所有可选接入均可在 `plugins/FactorySimulator/features.yml` 关闭：
+
+```yaml
+hooks:
+  placeholderapi: false
+  vault: false
+  holographic-displays: false
+  multiverse-core: false
+```
+
+关闭后请重启服务器；部分软依赖状态是在插件启动时检测的。
+
+## 配置文件
+
+插件不会把所有配置堆在一个文件中，各文件职责如下：
+
+| 文件 | 用途 |
+| --- | --- |
+| `config.yml` | 全局调试、资源预加载、运行库回退开关 |
+| `factory.yml` | 初始资金、地皮、等级、设备商店、生产、工人、成就和机器设置 |
+| `world.yml` | 工厂世界生成、环境、地板、墙壁和出生点设置 |
+| `storage.yml` | YAML、SQLite、MySQL 存储配置 |
+| `features.yml` | 软依赖开关和排行榜开关 |
+| `messages.yml` | 当前语言和回退语言选择 |
+| `lang/zh_cn.yml` | 简体中文消息 |
+| `lang/zh_tw.yml` | 繁体中文消息 |
+| `lang/en.yml` | 英文消息 |
+
+### 常用 `factory.yml` 配置
+
+```yaml
+plot:
+  initial-size: 32
+  growth-per-level: 8
+  max-size: 256
+  upgrade-base-cost: 2500
+
+economy:
+  starting-money: 1000
+  offline-income-minute-step: 5
+  offline-income-rate: 0.25
+
+production:
+  tick-interval: 20
+  basic-process-ticks: 100
+  basic-sell-price: 8.0
+```
+
+- `plot.initial-size`：玩家创建工厂时的初始地皮边长。
+- `plot.growth-per-level`：升级后增加的地皮边长。
+- `plot.max-size`：地皮最大边长。
+- `economy.starting-money`：初始资金。
+- `economy.offline-income-minute-step`：离线收益结算时间粒度，单位为分钟。
+- `economy.offline-income-rate`：离线收益倍率，`1.0` 表示基础收益，默认 `0.25`。
+- `production.tick-interval`：生产扫描间隔，20 ticks 约等于 1 秒。
+- `production.basic-process-ticks`：基础设备处理时间，100 ticks 约等于 5 秒。
+
+### 语言与消息
+
+`messages.yml` 只负责选择语言：
+
+```yaml
+language: zh_cn
+fallback: en
+```
+
+所有实际文案位于 `lang/` 目录。消息中可以使用 `{prefix}` 代替统一前缀；其他常用消息占位符包括 `{label}`、`{target}`、`{type}`、`{amount}`、`{name}`、`{level}`、`{plotSize}`、`{money}`、`{workers}`、`{machines}`、`{offlineHours}` 和 `{achievements}`。
+
+### 配置修改后的生效方式
+
+- `/fs reload` 需要 `factorysimulator.admin` 权限。
+- 修改语言、工厂数值、设备价格等配置后建议执行 `/fs reload`。
+- 修改存储类型、数据库连接、世界生成方式或软依赖开关后建议完整重启服务器。
+- 修改配置前请先备份原文件。
+
+## 数据存储
+
+存储类型在 `plugins/FactorySimulator/storage.yml` 中设置：
+
+```yaml
+storage:
+  type: YAML
+```
+
+支持的值：
+
+- `YAML`：适合单机、小型服务器和测试环境，每个玩家一份数据文件。
+- `SQLITE`：适合单服长期运行，数据存储在插件目录中的 `.db` 文件。
+- `MYSQL`：适合多人服务器或需要集中管理数据的环境。
+
+### SQLite 示例
+
+```yaml
+storage:
+  type: SQLITE
+  sqlite:
+    file: factorysimulator.db
+```
+
+### MySQL 示例
+
+```yaml
+storage:
+  type: MYSQL
+  mysql:
+    host: 127.0.0.1
+    port: 3306
+    database: factorysimulator
+    user: factorysimulator
+    password: '请修改为数据库密码'
+    params: useSSL=false&characterEncoding=utf8&autoReconnect=true&useUnicode=true
+  pool-size: 8
+```
+
+使用 MySQL 前请先创建数据库，并确保服务器可以访问数据库主机。默认打包驱动面向 Java 8、MySQL 5.x 和 MariaDB 5.x；使用 MySQL 8 时请根据实际驱动和连接参数进行适配，不要直接混用不兼容的旧驱动配置。
+
+### 切换存储注意事项
+
+FactorySimulator 不建议直接修改 `storage.yml` 后期待数据自动从一种存储迁移到另一种存储。切换前应完整备份 `plugins/FactorySimulator/`，并根据实际情况完成数据迁移或保留原存储作为回滚副本。
+
+## 目录结构与备份
+
+正常运行后，插件数据目录大致如下：
+
+```text
+plugins/
+└─ FactorySimulator/
+   ├─ config.yml
+   ├─ factory.yml
+   ├─ features.yml
+   ├─ messages.yml
+   ├─ storage.yml
+   ├─ world.yml
+   ├─ lang/
+   ├─ world/
+   │  └─ <玩家专属工厂世界>/
+   ├─ data/
+   │  └─ <YAML玩家工厂数据文件>/
+   └─ factorysimulator.db
+```
+
+- `world/`：玩家专属工厂世界，默认存放在插件目录内，不直接散落在服务端根目录。
+- `data/`：YAML 存储时的玩家工厂资料。
+- `*.db`：SQLite 存储时生成的数据库文件，文件名由 `storage.sqlite.file` 决定。
+- MySQL 存储时，工厂资料保存在数据库表中。
+
+建议在停服状态下备份整个 `plugins/FactorySimulator/` 目录；使用 MySQL 时还应同时备份数据库。
+
+## 常见问题
+
+### 玩家执行 `/fs enter` 提示先创建工厂
+
+先执行 `/fs create`。`/fs enter` 不会替玩家自动创建工厂。
+
+### PlaceholderAPI 变量没有解析
+
+确认 PlaceholderAPI 已安装并启用，`features.yml` 中 `hooks.placeholderapi` 为 `true`，然后重启服务器。可以使用：
+
+```text
+/papi parse me %factorysimulator_money%
+```
+
+检查变量是否正常返回。
+
+### 设备买不到
+
+检查设备 ID 拼写、工厂等级和资金；批量购买时还要确认总价是否超出工厂资金。设备价格及解锁等级位于 `factory.yml` 的 `shop.items` 节点。
+
+### 商店点击后如何购买多个设备
+
+点击设备后，在聊天框输入 `1-2304` 之间的整数即可批量购买；输入 `cancel` 可取消。如果输入无效，本次输入会被取消，需要重新点击设备发起购买。
+
+### 设备被破坏后无法识别
+
+不要删除设备 Lore 中的 `FS_MACHINE:<设备ID>` 标识。建议使用插件发放的工厂拆卸镐拆除设备。
+
+### 改了数据库配置但没有生效
+
+检查 `storage.type` 是否为大写的 `YAML`、`SQLITE` 或 `MYSQL`，确认数据库、账号和权限正确，并完整重启服务器。数据库切换前请备份原数据。
+
+### 是否必须安装 Vault、全息或多世界插件
+
+不必须。它们都是软依赖。只有需要对应生态功能时才安装；PlaceholderAPI 是使用工厂变量展示到其他插件时需要安装的前置。
+
+## 反馈与问题报告
+
+提交问题时请附上：
+
+1. Minecraft/Paper 版本和 Java 版本。
+2. FactorySimulator 版本。
+3. 服务器启动日志中与 FactorySimulator 相关的内容。
+4. 使用的存储类型及相关报错。
+5. 复现问题的命令、操作步骤和配置片段。
+
+请不要公开 MySQL 密码、服务器密钥或其他敏感信息。
+
+
+
+
+
+
+FactorySimulator 变量说明
+==========================
+
+一、PlaceholderAPI 变量
+-----------------------
+变量前缀：%factorysimulator_<变量名>%
+
+变量名             返回内容
+money              当前玩家工厂资金，保留两位小数
+level              当前玩家工厂等级
+factory_name       当前玩家工厂名称
+plot_size          当前玩家工厂地皮边长
+workers            当前玩家工人数
+machines           当前玩家已放置设备数量
+created            是否已经创建工厂，返回 true 或 false
+rank_money         按资金排行的当前玩家名次
+rank_level         按工厂等级排行的当前玩家名次
+
+示例：
+%factorysimulator_money%
+%factorysimulator_level%
+%factorysimulator_factory_name%
+%factorysimulator_rank_money%
+
+注意：PlaceholderAPI 为软依赖。服务器安装 PlaceholderAPI 后才会注册以上变量。
+
+二、消息文件占位符
+-------------------
+消息文件：plugins/FactorySimulator/messages.yml
+
+{prefix}            全局消息前缀
+{label}             当前使用的命令标签，例如 fs 或 factory
+{target}            查询目标玩家名称或玩家 ID
+{type}              设备类型 ID
+{amount}            设备数量
+
+工厂信息消息中还会使用：
+{name}              玩家名称
+{id}                玩家 UUID
+{level}             工厂等级
+{plotSize}          地皮大小
+{money}             当前资金
+{workers}           工人数
+{machines}          设备数量
+{offlineHours}      离线时长（小时）
+{achievements}      已完成成就数量
+
+服务器状态消息中还会使用：
+{players}           已记录的工厂总数
+{online}            当前在线玩家数
+{storage}           当前存储类型（YAML、SQLITE 或 MYSQL）
+{placeholderapi}    PlaceholderAPI 状态
+{vault}             Vault 状态
+{hologram}          HolographicDisplays 状态
+
+三、配置文件变量（配置路径）
+---------------------------
+配置文件：plugins/FactorySimulator/factory.yml
+
+starter.initial-machine-amount    创建工厂时发放的基础采矿机数量
+starter.initial-conveyor-amount   创建工厂时发放的传送带数量
+starter.initial-package-amount    创建工厂时发放的售货机数量
+starter.pickaxe-cooldown          工厂拆卸镐冷却配置
+
+leveling.money-per-level          升级所需资金配置
+
+shop.items.<设备ID>.price         设备购买价格
+shop.items.<设备ID>.unlock-level  设备解锁所需工厂等级
+
+plot.initial-size                 初始地皮边长
+plot.growth-per-level             每级地皮增加的边长
+plot.max-size                     地皮最大边长
+
+economy.starting-money            创建工厂时的初始资金
+economy.offline-income-minute-step 离线收益结算时间间隔（分钟）
+economy.offline-income-rate       离线收益倍率
+
+workers.starting-count            初始工人数
+workers.max-count                工人数上限
+workers.base-efficiency           工人基础效率
+
+achievements.enabled              是否启用成就系统
+achievements.broadcast-threshold  成就广播阈值
+
+production.tick-interval          生产扫描间隔（Bukkit ticks）
+production.basic-process-ticks    基础采矿机处理时间
+production.basic-sell-price       基础产品售卖价格
+
+新增设备产物售价（相对于 production.basic-sell-price）：
+coal                              基础价格的 1.5 倍
+iron_ore                          基础价格的 2.5 倍
+iron_ingot                        基础价格的 3.0 倍
+factory_product                   基础价格的 6.0 倍
+
+machines.drop-on-break             拆除设备时是否掉落设备物品
+machines.item-marker               设备物品隐藏 Lore 标识
+
+四、其他配置文件路径
+---------------------
+storage.yml
+storage.type                       存储类型：YAML、SQLITE、MYSQL
+storage.sqlite.file                SQLite 数据库文件名
+storage.mysql.host                 MySQL 地址
+storage.mysql.port                 MySQL 端口
+storage.mysql.database             MySQL 数据库名
+storage.mysql.user                 MySQL 用户名
+storage.mysql.password             MySQL 密码
+storage.mysql.params               MySQL 连接参数
+storage.pool-size                  存储连接池大小
+
+数据库兼容说明：
+本插件默认打包 MySQL Connector/J 5.1.49，适合 Java 8 服务端及 MySQL 5.x / MariaDB 5.x。
+SQLite 默认使用 sqlite-jdbc 3.36.0.3，同样兼容 Java 8。
+注意：Minecraft/Paper 1.12.2 的版本不会强制要求数据库必须是 5.4；数据库版本取决于你的数据库服务端。
+如果使用 MySQL 8，请将驱动和连接参数升级为对应的 MySQL 8 配置，不建议与当前默认旧驱动混用。
+
+world.yml
+world.auto-create-on-join          是否自动创建工厂世界
+generation.environment             世界环境
+generation.spawn-y                 工厂出生点高度
+generation.border-height           墙壁高度
+generation.border-material         外墙方块材质
+generation.floor-material          虚空世界底部材质
+generation.platform-material      工厂地皮材质
+generation.center-marker-material  工厂中心标记材质
+generation.use-void-floor          是否使用虚空底部
+
+features.yml
+leaderboard.enabled                是否启用排行榜
+leaderboard.size                   排行榜显示数量
+hooks.placeholderapi              是否启用 PlaceholderAPI 接入
+hooks.vault                       是否启用 Vault 接入
+hooks.holographic-displays         是否启用 HolographicDisplays 接入
+hooks.multiverse-core              是否启用 Multiverse-Core 接入
+
+五、当前设备 ID
+---------------
+basic_miner       基础采矿机，默认物品材质 DISPENSER
+conveyor          传送带，默认物品材质 HOPPER
+seller            自动售货机，默认物品材质 CHEST
+coal_miner        煤炭采矿机，默认物品材质 DROPPER
+iron_miner        铁矿采矿机，默认物品材质 DISPENSER
+smelter            工业熔炼机，默认物品材质 FURNACE
+assembler          自动装配机，默认物品材质 DROPPER
+fuel_generator     燃料发电机，默认物品材质 REDSTONE_BLOCK
+storage            物流仓储箱，默认物品材质 CHEST
+
+机器搭配指南中的默认推荐：
+basic_miner       搭配传送带输出，连接物流仓储箱，末端连接自动售货机
+coal_miner        搭配传送带和物流仓储箱，末端连接自动售货机
+iron_miner        搭配工业熔炼机，熔炼后接自动装配机
+conveyor          连接采矿机、加工设备、仓储箱和自动售货机
+smelter            前端接采矿机，后端接自动装配机或仓储箱
+assembler          前端接工业熔炼机，后端接自动售货机
+fuel_generator     与采矿区和加工区分区摆放
+storage            作为生产区与加工区之间的中转缓冲
+seller             放在流水线末端，自动出售工厂产出
+
+六、设备物品标识
+----------------
+设备物品 Lore 中包含：
+§0FS_MACHINE:<设备ID>
+
+例如：
+§0FS_MACHINE:basic_miner
+
+工厂拆卸镐标识：FS_PICKAXE
+教程书标识：FS_TUTORIAL
+
+这些标识用于识别特殊物品，请不要手动删除对应 Lore，否则插件可能无法识别物品。
+
+七、主要命令参数
+----------------
+/fs create                       创建玩家专属工厂
+/fs enter                        进入自己的工厂世界
+/fs menu                         查看教程菜单提示
+/fs rename <工厂名称>             修改工厂名称
+/fs buy <设备ID>                 购买并获得设备
+/fs info                         查看自己的工厂信息
+/fs info <玩家名或UUID>           查看其他玩家工厂信息
+/fs info server                  查看服务器状态
+/fs status                       查看服务器状态
+/fs server                       查看服务器状态
+/fs machine give <设备ID> [数量]  管理员/测试用设备发放命令
+
+八、世界及数据目录
+------------------
+plugins/FactorySimulator/world/  玩家专属工厂世界目录
+plugins/FactorySimulator/data/   YAML 玩家工厂数据目录
+plugins/FactorySimulator/*.db   SQLite 数据库文件（按配置文件名生成）
+
+世界名称格式：
+fs_<去除短横线后的玩家UUID>

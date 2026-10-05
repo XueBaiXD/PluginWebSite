@@ -1,21 +1,47 @@
 [
   {
     "id": "BaiReplay",
-    "name": "BaiReplay",
+    "name": "[精品] BaiReplay",
     "description": "仿 Hypixel 的服务端回放系统，玩家不需要装模组就能观看回放",
     "version": "1.0.0",
     "author": "XueBaiXD",
-    "platform": "Paper 1.21.1",
-    "icon": "images/BaiReplay-icon.png",
+    "platform": "Bukkit / Paper / Spigot 1.21.1 & 1.21.11 (仅测试这俩版本)",
+    "icon": "images/plugin-icon-normal.png",
     "tags": ["娱乐", "工具"],
-    "screenshots": [
-      "images/bairplay-1.png",
-      "images/bairplay-2.png",
-      "images/bairplay-3.png"
-    ],
+    "screenshots": "",
     "readme": "readmes/BaiReplay.md",
     "changelog": "changelogs/BaiReplay.md",
     "download": "downloads/BaiReplay-1.0.0-ciy4gj.jar",
+    "source": ""
+  },
+  {
+    "id": "[开源] FactorySimulator",
+    "name": "FactorySimulator",
+    "description": "一个工厂模拟器插件，让你的玩家来进厂打工吧！",
+    "version": "1.1.1",
+    "author": "XueBaiXD , gjyyds1",
+    "platform": "Bukkit / Paper / Spigot 1.12.2 (仅测试该版本)",
+    "icon": "images/plugin-icon-normal.png",
+    "tags": ["娱乐","玩法"],
+    "screenshots": "",
+    "readme": "readmes/FactorySimulator.md",
+    "changelog": "changelogs/FactorySimulator.md",
+    "download": "https://modrinth.com/plugin/factorysimulator",
+    "source": "https://github.com/XueBaiXD/FactorySimulator"
+  },
+  {
+    "id": "BungeeMotd",
+    "name": "BungeeMotd",
+    "description": "融合了ColorMotd，Bungeei，FakePlayer于一体的超级石山插件！",
+    "version": "1.0.3",
+    "author": "XueBaiXD",
+    "platform": "BungeeCord / WaterFall 1.12.2 & 1.21.x (仅测试这俩版本)",
+    "icon": "images/plugin-icon-normal.png",
+    "tags": ["信息显示", "工具"],
+    "screenshots": "",
+    "readme": "",
+    "changelog": "",
+    "download": "downloads/BungeeMotd-1.0.3.jar",
     "source": ""
   }
 ]

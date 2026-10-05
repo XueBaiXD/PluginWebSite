@@ -25,19 +25,6 @@
 - 鼠标拖尾粒子特效，颜色跟随当前主题
 - 全站深色主题，卡片 hover 有发光效果
 
-### 内容管理
-
-所有内容用 JSON + Markdown 维护，加东西不用动代码：
-
-- 加插件：编辑 `data/plugins.json`，图片丢进 `images/`，文档丢进 `readmes/`
-- 加公告：写一个 `.md` 文件丢进 `announcements/`，在 `data/announcements.json` 里登记
-- 加网站更新：同上，丢进 `site-changelogs/`
-- 加团队成员：编辑 `data/team.json`
-
-### 技术
-
-纯静态网站，没有后端，没有数据库。所有内容在浏览器端加载，托管在服务器上，nginx 直接跑。
-
 ## 已知问题
 
 - 首次加载时，如果网络慢，Markdown 渲染会有短暂空白
