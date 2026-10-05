@@ -28,11 +28,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function renderDetail(plugin) {
     const container = document.getElementById('pluginDetail');
 
-    // ===== 头部 =====
+    // ===== 头部图标 =====
     const iconHtml = plugin.icon
         ? `<img class="plugin-detail-icon" src="${escapeHtml(plugin.icon)}" alt="${escapeHtml(plugin.name)}">`
         : `<div class="plugin-icon-placeholder" style="width:96px;height:96px;font-size:36px;">${escapeHtml(plugin.name.charAt(0))}</div>`;
 
+    // ===== 顶部按钮 =====
     const buttons = [];
     if (plugin.download) {
         buttons.push(`<a href="${escapeHtml(plugin.download)}" class="btn btn-primary" target="_blank" rel="noopener">下载</a>`);
@@ -41,7 +42,7 @@ async function renderDetail(plugin) {
         buttons.push(`<a href="${escapeHtml(plugin.source)}" class="btn btn-outline" target="_blank" rel="noopener">源码</a>`);
     }
 
-    // ===== 预加载三个内容 =====
+    // ===== 并行加载 README 和 CHANGELOG =====
     const [readmeHtml, changelogHtml] = await Promise.all([
         loadMarkdown(plugin.readme),
         loadMarkdown(plugin.changelog)
@@ -102,7 +103,7 @@ async function renderDetail(plugin) {
     bindLightbox();
 }
 
-// 加载并渲染 markdown 文件
+// ===== 加载并渲染 markdown =====
 async function loadMarkdown(path) {
     if (!path) {
         return '<div class="empty">暂无内容</div>';
@@ -120,22 +121,38 @@ async function loadMarkdown(path) {
     }
 }
 
-// Tab 切换
+// ===== Tab 切换（锚点对齐，不跳动）=====
 function bindTabs() {
     const buttons = document.querySelectorAll('.tab-btn');
     const panels = document.querySelectorAll('.tab-panel');
+    const tabsEl = document.querySelector('.tabs');
+
+    if (!tabsEl) return;
 
     buttons.forEach(btn => {
         btn.addEventListener('click', () => {
             const target = btn.dataset.tab;
 
+            // 1. 记录 Tab 栏在屏幕上的位置（切换前）
+            const beforeTop = tabsEl.getBoundingClientRect().top;
+
+            // 2. 切换内容
             buttons.forEach(b => b.classList.toggle('active', b === btn));
             panels.forEach(p => p.classList.toggle('active', p.dataset.panel === target));
+
+            // 3. 计算切换后 Tab 栏的位置
+            const afterTop = tabsEl.getBoundingClientRect().top;
+
+            // 4. 补偿滚动，让 Tab 栏回到原来的屏幕位置
+            const delta = afterTop - beforeTop;
+            if (delta !== 0) {
+                window.scrollBy(0, delta);
+            }
         });
     });
 }
 
-// 灯箱
+// ===== 灯箱 =====
 function bindLightbox() {
     const lightbox = document.getElementById('lightbox');
     const img = document.getElementById('lightboxImg');
@@ -159,11 +176,13 @@ function bindLightbox() {
     });
 }
 
+// ===== 错误显示 =====
 function showError(msg) {
     document.getElementById('pluginDetail').innerHTML =
         `<div class="empty">${escapeHtml(msg)}<br><br><a href="index.html">← 返回列表</a></div>`;
 }
 
+// ===== HTML 转义 =====
 function escapeHtml(s) {
     if (s == null) return '';
     return String(s)

@@ -3,12 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>插件详情 - XueBaiXD</title>
+    <title>雪白的插件小屋</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-dark.min.css">
 </head>
 <body>
+
+<canvas id="cursorTrail"></canvas>
+
+<nav class="site-nav">
+    <div class="site-nav-inner">
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">首页</a>
+            <a href="announcements.html" class="nav-link">公告</a>
+            <a href="site-changelog.html" class="nav-link">网站更新记录</a>
+            <a href="team.html" class="nav-link">运营团队</a>
+        </div>
+        <div class="theme-switcher">
+            <button class="theme-toggle" id="themeToggle" title="切换配色" aria-label="切换配色">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="13.5" cy="6.5" r="0.5" fill="currentColor"/>
+                    <circle cx="17.5" cy="10.5" r="0.5" fill="currentColor"/>
+                    <circle cx="8.5" cy="7.5" r="0.5" fill="currentColor"/>
+                    <circle cx="6.5" cy="12.5" r="0.5" fill="currentColor"/>
+                    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+                </svg>
+            </button>
+            <div class="theme-menu" id="themeMenu">
+                <div class="theme-menu-title">选择配色</div>
+                <div class="theme-option" data-theme="blue">
+                    <span class="theme-dot" style="background:#4a9eff"></span>星夜蓝
+                </div>
+                <div class="theme-option" data-theme="purple">
+                    <span class="theme-dot" style="background:#b166ff"></span>幻紫
+                </div>
+                <div class="theme-option" data-theme="green">
+                    <span class="theme-dot" style="background:#22d38a"></span>翠竹
+                </div>
+                <div class="theme-option" data-theme="orange">
+                    <span class="theme-dot" style="background:#ff8a3d"></span>橙霞
+                </div>
+                <div class="theme-option" data-theme="pink">
+                    <span class="theme-dot" style="background:#ff3d8f"></span>玫红
+                </div>
+                <div class="theme-option" data-theme="cyan">
+                    <span class="theme-dot" style="background:#22d4e8"></span>天青
+                </div>
+                <div class="theme-option" data-theme="light">
+                    <span class="theme-dot" style="background:#3b82f6"></span>白昼
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
 
 <header class="site-header compact">
     <div class="container">
@@ -33,6 +81,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>
+<script src="js/theme.js"></script>
 <script src="js/plugin.js"></script>
 </body>
 </html>
