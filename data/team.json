@@ -1,7 +1,7 @@
 [
   {
     "id": "XueBaiXD",
-    "name": "XueBaiXD",
+    "name": "[主人] XueBaiXD 喵~",
     "role": "创始人 / 主开发",
     "avatar": "images/favicon.png",
     "description": "写代码的，做插件，偶尔写点文档。",
@@ -11,5 +11,14 @@
       "bilibili": "https://space.bilibili.com/1670806198",
       "github": "https://github.com/XueBaiXD"
     }
+  },
+  {
+    "id": "gjyyds1",
+    "name": "[神秘人] gjyyds1",
+    "role": "技术顾问",
+    "avatar": "images/admin-icon-normal.jpg",
+    "description": "应对方隐私保护要求，不过多透露其个人信息",
+    "tags": ["开发"],
+    "links": ""
   }
 ]
