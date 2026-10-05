@@ -6,8 +6,9 @@
     <title>雪白的插件小屋</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-dark.min.css">
 </head>
-<body data-list="site-changelogs">
+<body data-post>
 
 <canvas id="cursorTrail"></canvas>
 
@@ -15,8 +16,8 @@
     <div class="site-nav-inner">
         <div class="nav-links">
             <a href="index.html" class="nav-link">首页</a>
-            <a href="announcements.html" class="nav-link">公告</a>
-            <a href="site-changelog.html" class="nav-link active">网站更新记录</a>
+            <a href="announcements.html" class="nav-link" id="navAnnounce">公告</a>
+            <a href="site-changelog.html" class="nav-link" id="navChangelog">网站更新记录</a>
             <a href="team.html" class="nav-link">运营团队</a>
         </div>
         <div class="theme-switcher">
@@ -43,17 +44,14 @@
     </div>
 </nav>
 
-<header class="site-header">
+<header class="site-header compact">
     <div class="container">
-        <h1 class="site-title">网站更新记录</h1>
-        <p class="site-subtitle">对网站的小迭代呀~</p>
+        <a href="javascript:history.back()" class="back-link">← 返回列表</a>
     </div>
 </header>
 
-<main class="container">
-    <div class="post-list" id="postList">
-        <div class="loading">加载中...</div>
-    </div>
+<main class="container" id="postDetail">
+    <div class="loading">加载中...</div>
 </main>
 
 <footer class="site-footer">
@@ -62,7 +60,9 @@
     </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>
 <script src="js/theme.js"></script>
-<script src="js/list.js"></script>
+<script src="js/post.js"></script>
 </body>
 </html>

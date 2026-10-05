@@ -3,13 +3,13 @@
     "id": "XueBaiXD",
     "name": "XueBaiXD",
     "role": "创始人 / 主开发",
-    "avatar": "images/team/XueBaiXD.png",
+    "avatar": "images/favicon.png",
     "description": "写代码的，做插件，偶尔写点文档。",
     "tags": ["开发", "运维", "文档"],
     "links": {
-      "github": "https://github.com/XueBaiXD",
-      "bilibili": "https://space.bilibili.com/1670806198",
       "qq": "3987575641",
+      "bilibili": "https://space.bilibili.com/1670806198",
+      "github": "https://github.com/XueBaiXD",
       "email": "3987575641@qq.com"
     }
   }
