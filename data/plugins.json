@@ -1,20 +1,21 @@
 [
-    {
-        "id": "BaiReplay",
-        "name": "BaiReplay",
-        "description": "仿 Hypixel 的服务端回放系统",
-        "version": "1.0.0",
-        "author": "XueBaiXD",
-        "platform": "Paper 1.21.1",
-        "icon": "images/bairplay-icon.png",
-        "tags": ["回放", "跨服", "MySQL", "Hypixel 风格"],
-        "screenshots": [
-            "images/bairplay-1.png",
-            "images/bairplay-2.png",
-            "images/bairplay-3.png"
-        ],
-        "readme": "readmes/bairplay.md",
-        "download": "https://github.com/yourname/bairplay/releases",
-        "source": ""
-    }
+  {
+    "id": "BaiReplay",
+    "name": "BaiReplay",
+    "description": "仿 Hypixel 的服务端回放系统，玩家不需要装模组就能观看回放",
+    "version": "1.0.0",
+    "author": "XueBaiXD",
+    "platform": "Paper 1.21.1",
+    "icon": "images/BaiReplay-icon.png",
+    "tags": ["娱乐", "工具"],
+    "screenshots": [
+      "images/bairplay-1.png",
+      "images/bairplay-2.png",
+      "images/bairplay-3.png"
+    ],
+    "readme": "readmes/BaiReplay.md",
+    "changelog": "changelogs/BaiReplay.md",
+    "download": "https://github.com/yourname/bairplay/releases",
+    "source": ""
+  }
 ]

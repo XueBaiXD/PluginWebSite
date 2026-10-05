@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function renderDetail(plugin) {
     const container = document.getElementById('pluginDetail');
 
-    // 基本信息
+    // ===== 头部 =====
     const iconHtml = plugin.icon
         ? `<img class="plugin-detail-icon" src="${escapeHtml(plugin.icon)}" alt="${escapeHtml(plugin.name)}">`
         : `<div class="plugin-icon-placeholder" style="width:96px;height:96px;font-size:36px;">${escapeHtml(plugin.name.charAt(0))}</div>`;
@@ -41,29 +41,20 @@ async function renderDetail(plugin) {
         buttons.push(`<a href="${escapeHtml(plugin.source)}" class="btn btn-outline" target="_blank" rel="noopener">源码</a>`);
     }
 
-    // 截图
+    // ===== 预加载三个内容 =====
+    const [readmeHtml, changelogHtml] = await Promise.all([
+        loadMarkdown(plugin.readme),
+        loadMarkdown(plugin.changelog)
+    ]);
+
+    // ===== 截图 =====
     const screenshotsHtml = (plugin.screenshots && plugin.screenshots.length > 0)
-        ? `<div class="screenshots">
-            ${plugin.screenshots.map(src =>
-                `<img class="screenshot" src="${escapeHtml(src)}" alt="截图" loading="lazy">`
-            ).join('')}
-           </div>`
-        : '';
+        ? plugin.screenshots.map(src =>
+            `<img class="screenshot" src="${escapeHtml(src)}" alt="截图" loading="lazy">`
+        ).join('')
+        : '<div class="empty">暂无截图</div>';
 
-    // README
-    let readmeHtml = '';
-    if (plugin.readme) {
-        try {
-            const mdRes = await fetch(plugin.readme);
-            if (mdRes.ok) {
-                const md = await mdRes.text();
-                readmeHtml = `<div class="readme">${marked.parse(md)}</div>`;
-            }
-        } catch (e) {
-            console.warn('README 加载失败', e);
-        }
-    }
-
+    // ===== 组装页面 =====
     container.innerHTML = `
         <div class="plugin-detail-header">
             ${iconHtml}
@@ -78,21 +69,73 @@ async function renderDetail(plugin) {
             </div>
         </div>
 
-        ${screenshotsHtml}
-        ${readmeHtml}
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="intro">插件介绍</button>
+            <button class="tab-btn" data-tab="screenshots">插件效果</button>
+            <button class="tab-btn" data-tab="changelog">更新记录</button>
+        </div>
+
+        <div class="tab-panel active" data-panel="intro">
+            ${readmeHtml}
+        </div>
+
+        <div class="tab-panel" data-panel="screenshots">
+            <div class="screenshots">${screenshotsHtml}</div>
+        </div>
+
+        <div class="tab-panel" data-panel="changelog">
+            ${changelogHtml}
+        </div>
     `;
 
-    // 代码高亮
+    // ===== 绑定 Tab 切换 =====
+    bindTabs();
+
+    // ===== 代码高亮 =====
     if (window.hljs) {
         container.querySelectorAll('pre code').forEach(block => {
             hljs.highlightElement(block);
         });
     }
 
-    // 灯箱
+    // ===== 灯箱 =====
     bindLightbox();
 }
 
+// 加载并渲染 markdown 文件
+async function loadMarkdown(path) {
+    if (!path) {
+        return '<div class="empty">暂无内容</div>';
+    }
+    try {
+        const res = await fetch(path);
+        if (!res.ok) {
+            return '<div class="empty">内容加载失败</div>';
+        }
+        const md = await res.text();
+        return `<div class="readme">${marked.parse(md)}</div>`;
+    } catch (e) {
+        console.warn('markdown 加载失败', path, e);
+        return '<div class="empty">内容加载失败</div>';
+    }
+}
+
+// Tab 切换
+function bindTabs() {
+    const buttons = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = btn.dataset.tab;
+
+            buttons.forEach(b => b.classList.toggle('active', b === btn));
+            panels.forEach(p => p.classList.toggle('active', p.dataset.panel === target));
+        });
+    });
+}
+
+// 灯箱
 function bindLightbox() {
     const lightbox = document.getElementById('lightbox');
     const img = document.getElementById('lightboxImg');

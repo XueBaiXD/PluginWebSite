@@ -215,7 +215,7 @@ a:hover {
     font-size: 12px;
 }
 
-/* ===== 详情页 ===== */
+/* ===== 详情页头部 ===== */
 .plugin-detail-header {
     display: flex;
     gap: 20px;
@@ -284,6 +284,60 @@ a:hover {
     color: var(--primary);
 }
 
+/* ===== Tab 标签栏 ===== */
+.tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.15s;
+    font-family: inherit;
+}
+
+.tab-btn:hover {
+    color: var(--text);
+}
+
+.tab-btn.active {
+    color: var(--primary);
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--primary);
+}
+
+/* ===== Tab 内容 ===== */
+.tab-panel {
+    display: none;
+    animation: fadeIn 0.2s ease;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ===== 截图 ===== */
 .screenshots {
     display: grid;
@@ -304,7 +358,7 @@ a:hover {
     transform: scale(1.02);
 }
 
-/* ===== README ===== */
+/* ===== README / CHANGELOG 内容 ===== */
 .readme {
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -453,4 +507,5 @@ a:hover {
     .plugin-detail-icon { width: 72px; height: 72px; }
     .plugin-detail-title { font-size: 22px; }
     .readme { padding: 20px; }
+    .tab-btn { padding: 10px 14px; font-size: 14px; }
 }
