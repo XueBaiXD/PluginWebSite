@@ -14,8 +14,15 @@
 
 <nav class="site-nav">
     <div class="site-nav-inner">
-        <div class="nav-links">
-            <a href="index.html" class="nav-link">首页</a>
+        <button class="nav-toggle" id="navToggle" aria-label="菜单">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html" class="nav-link active">首页</a>
             <a href="announcements.html" class="nav-link">公告</a>
             <a href="site-changelog.html" class="nav-link">网站更新记录</a>
             <a href="team.html" class="nav-link">运营团队</a>
@@ -32,27 +39,13 @@
             </button>
             <div class="theme-menu" id="themeMenu">
                 <div class="theme-menu-title">选择配色</div>
-                <div class="theme-option" data-theme="blue">
-                    <span class="theme-dot" style="background:#4a9eff"></span>星夜蓝
-                </div>
-                <div class="theme-option" data-theme="purple">
-                    <span class="theme-dot" style="background:#b166ff"></span>幻紫
-                </div>
-                <div class="theme-option" data-theme="green">
-                    <span class="theme-dot" style="background:#22d38a"></span>翠竹
-                </div>
-                <div class="theme-option" data-theme="orange">
-                    <span class="theme-dot" style="background:#ff8a3d"></span>橙霞
-                </div>
-                <div class="theme-option" data-theme="pink">
-                    <span class="theme-dot" style="background:#ff3d8f"></span>玫红
-                </div>
-                <div class="theme-option" data-theme="cyan">
-                    <span class="theme-dot" style="background:#22d4e8"></span>天青
-                </div>
-                <div class="theme-option" data-theme="light">
-                    <span class="theme-dot" style="background:#3b82f6"></span>白昼
-                </div>
+                <div class="theme-option" data-theme="blue"><span class="theme-dot" style="background:#4a9eff"></span>星夜蓝</div>
+                <div class="theme-option" data-theme="purple"><span class="theme-dot" style="background:#b166ff"></span>幻紫</div>
+                <div class="theme-option" data-theme="green"><span class="theme-dot" style="background:#22d38a"></span>翠竹</div>
+                <div class="theme-option" data-theme="orange"><span class="theme-dot" style="background:#ff8a3d"></span>橙霞</div>
+                <div class="theme-option" data-theme="pink"><span class="theme-dot" style="background:#ff3d8f"></span>玫红</div>
+                <div class="theme-option" data-theme="cyan"><span class="theme-dot" style="background:#22d4e8"></span>天青</div>
+                <div class="theme-option" data-theme="light"><span class="theme-dot" style="background:#3b82f6"></span>白昼</div>
             </div>
         </div>
     </div>

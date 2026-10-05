@@ -1,10 +1,10 @@
 /**
- * 主题切换 + 鼠标拖尾
+ * 主题切换 + 鼠标拖尾 + 移动端汉堡菜单
  */
 (function () {
 
     // =====================================================
-    // 主题定义（每套主题对应一个 CSS class）
+    // 主题定义
     // =====================================================
     const THEMES = {
         blue:   { name: '星夜蓝' },
@@ -23,17 +23,13 @@
         if (!THEMES[key]) key = 'blue';
 
         const root = document.documentElement;
-
-        // 移除所有主题 class，再加新的
         ALL_CLASSES.forEach(c => root.classList.remove(c));
         root.classList.add('theme-' + key);
 
-        // 保存
         try {
             localStorage.setItem(STORAGE_KEY, key);
         } catch (e) {}
 
-        // 更新菜单选中态
         document.querySelectorAll('.theme-option').forEach(el => {
             el.classList.toggle('active', el.dataset.theme === key);
         });
@@ -46,12 +42,10 @@
         } catch (e) {}
         applyTheme(saved);
 
-        // 绑定选项
         document.querySelectorAll('.theme-option').forEach(el => {
             el.addEventListener('click', () => applyTheme(el.dataset.theme));
         });
 
-        // 开关菜单
         const toggle = document.getElementById('themeToggle');
         const menu = document.getElementById('themeMenu');
         if (toggle && menu) {
@@ -70,6 +64,54 @@
     }
 
     // =====================================================
+    // 移动端汉堡菜单
+    // =====================================================
+    function initNavToggle() {
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        if (!navToggle || !navLinks) return;
+
+        navToggle.addEventListener('click', e => {
+            e.stopPropagation();
+            navLinks.classList.toggle('show');
+            navToggle.classList.toggle('active');
+        });
+
+        // 点击链接后收起
+        navLinks.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('show');
+                navToggle.classList.remove('active');
+            });
+        });
+
+        // 点击外部收起
+        document.addEventListener('click', () => {
+            navLinks.classList.remove('show');
+            navToggle.classList.remove('active');
+        });
+
+        navLinks.addEventListener('click', e => e.stopPropagation());
+
+        // Esc 收起
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                navLinks.classList.remove('show');
+                navToggle.classList.remove('active');
+            }
+        });
+
+        // 屏幕变宽时自动收起
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('show');
+                navToggle.classList.remove('active');
+            }
+        });
+    }
+
+    // =====================================================
     // 鼠标拖尾
     // =====================================================
     function initCursorTrail() {
@@ -77,6 +119,11 @@
         if (!canvas) return;
 
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+
+        // 触屏设备跳过
+        if ('ontouchstart' in window && !window.matchMedia('(pointer: fine)').matches) {
             return;
         }
 
@@ -172,6 +219,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         initTheme();
+        initNavToggle();
         initCursorTrail();
     });
 

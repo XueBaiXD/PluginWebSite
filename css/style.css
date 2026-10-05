@@ -226,6 +226,28 @@ a:hover {
     gap: 8px;
 }
 
+/* 汉堡按钮（默认隐藏） */
+.nav-toggle {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+.nav-toggle:hover,
+.nav-toggle.active {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
 .nav-links {
     display: flex;
     align-items: center;
@@ -901,6 +923,11 @@ a:hover {
     gap: 4px;
     border-bottom: 1px solid var(--border);
     margin-bottom: 28px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar {
+    display: none;
 }
 
 .tab-btn {
@@ -914,6 +941,8 @@ a:hover {
     position: relative;
     transition: color 0.15s;
     font-family: inherit;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .tab-btn:hover {
@@ -1120,40 +1149,353 @@ a:hover {
     transition: border-color 0.4s ease;
 }
 
-/* ===== 响应式 ===== */
-@media (max-width: 640px) {
-    .site-title { font-size: 24px; }
-    .plugin-detail-header { flex-direction: column; }
-    .plugin-detail-icon { width: 72px; height: 72px; }
-    .plugin-detail-title { font-size: 22px; }
-    .readme { padding: 20px; }
-    .tab-btn { padding: 10px 14px; font-size: 14px; }
-    .header-top { flex-direction: row; align-items: flex-start; }
+/* =====================================================
+   响应式：移动端
+   ===================================================== */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 16px;
+    }
 
+    /* ---------- 导航栏 ---------- */
     .site-nav-inner {
         padding: 0 12px;
-        gap: 4px;
-        overflow-x: auto;
+        gap: 8px;
+        position: relative;
     }
+
+    /* 显示汉堡按钮 */
+    .nav-toggle {
+        display: flex;
+    }
+
+    /* 导航链接变成下拉面板 */
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 2px;
+        padding: 8px;
+        background: var(--nav-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
+        z-index: 490;
+    }
+
+    .nav-links.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
     .nav-link {
-        padding: 8px 10px;
-        font-size: 13px;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 15px;
+        width: 100%;
+        text-align: left;
     }
-    .theme-toggle { width: 36px; height: 36px; }
 
-    .team-avatar { width: 56px; height: 56px; }
-    .team-avatar-placeholder { width: 56px; height: 56px; font-size: 22px; }
-    .team-name { font-size: 16px; }
+    .nav-link.active {
+        background: var(--tag-bg);
+    }
 
-    .post-item {
-        padding: 14px 16px;
+    .nav-link.active::after {
+        display: none;
+    }
+
+    /* 主题按钮推到最右 */
+    .theme-switcher {
+        margin-left: auto;
+    }
+
+    /* ---------- 头部 ---------- */
+    .site-header {
+        padding: 36px 0 24px;
+        margin-bottom: 30px;
+    }
+
+    .site-header.compact {
+        padding: 20px 0 16px;
+        margin-bottom: 20px;
+    }
+
+    .site-title {
+        font-size: 26px;
+    }
+
+    .site-subtitle {
+        font-size: 14px;
+    }
+
+    .header-top {
         gap: 12px;
     }
+
+    /* ---------- 首页 ---------- */
+    .toolbar {
+        gap: 10px;
+    }
+
+    .search-input {
+        padding: 10px 14px;
+    }
+
+    .tag-filter {
+        gap: 6px;
+    }
+
+    .tag-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .plugin-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-bottom: 40px;
+    }
+
+    .plugin-card {
+        padding: 16px;
+    }
+
+    .plugin-card:hover {
+        transform: none;
+    }
+
+    .plugin-icon,
+    .plugin-icon-placeholder {
+        width: 42px;
+        height: 42px;
+    }
+
+    .plugin-icon-placeholder {
+        font-size: 18px;
+    }
+
+    .plugin-name {
+        font-size: 16px;
+    }
+
+    .plugin-desc {
+        min-height: auto;
+        font-size: 13px;
+    }
+
+    /* ---------- 插件详情页 ---------- */
+    .plugin-detail-header {
+        flex-direction: column;
+        gap: 16px;
+        padding-bottom: 24px;
+        margin-bottom: 24px;
+    }
+
+    .plugin-detail-icon,
+    .plugin-icon-placeholder {
+        width: 72px !important;
+        height: 72px !important;
+        font-size: 28px !important;
+    }
+
+    .plugin-detail-title {
+        font-size: 22px;
+    }
+
+    .plugin-detail-meta {
+        font-size: 13px;
+    }
+
+    .plugin-detail-actions {
+        gap: 8px;
+    }
+
+    .btn {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    .tabs {
+        margin-bottom: 20px;
+    }
+
+    .tab-btn {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+
+    /* ---------- 截图 ---------- */
+    .screenshots {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 30px;
+    }
+
+    .screenshot:hover {
+        transform: none;
+    }
+
+    /* ---------- README ---------- */
+    .readme {
+        padding: 20px 16px;
+        margin-bottom: 40px;
+        font-size: 14px;
+    }
+
+    .readme h1 {
+        font-size: 22px;
+    }
+    .readme h2 {
+        font-size: 19px;
+    }
+    .readme h3 {
+        font-size: 16px;
+    }
+
+    .readme pre {
+        padding: 12px;
+        font-size: 12px;
+    }
+    .readme pre code {
+        font-size: 12px;
+    }
+
+    .readme code {
+        font-size: 12px;
+        padding: 1px 5px;
+    }
+
+    .readme table {
+        font-size: 13px;
+        display: block;
+        overflow-x: auto;
+    }
+    .readme th, .readme td {
+        padding: 6px 10px;
+    }
+
+    /* ---------- 公告 / 网站更新记录列表 ---------- */
+    .post-list {
+        gap: 10px;
+        margin-bottom: 40px;
+    }
+
+    .post-item {
+        padding: 12px 14px;
+        gap: 10px;
+    }
+
+    .post-item:hover {
+        transform: none;
+    }
+
     .post-item-icon {
         width: 38px;
         height: 38px;
+        border-radius: 8px;
     }
-    .post-item-title { font-size: 15px; }
-    .post-item-summary { font-size: 12px; }
-    .post-item-date { display: none; }
+
+    .post-item-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .post-item-title {
+        font-size: 15px;
+    }
+
+    .post-item-summary {
+        font-size: 12px;
+    }
+
+    .post-item-date {
+        display: none;
+    }
+
+    /* ---------- 运营团队 ---------- */
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-bottom: 40px;
+    }
+
+    .team-card {
+        padding: 18px;
+    }
+
+    .team-card:hover {
+        transform: none;
+    }
+
+    .team-avatar,
+    .team-avatar-placeholder {
+        width: 56px;
+        height: 56px;
+        font-size: 22px;
+    }
+
+    .team-name {
+        font-size: 16px;
+    }
+
+    .team-role {
+        font-size: 12px;
+    }
+
+    .team-desc {
+        font-size: 13px;
+    }
+
+    /* ---------- 主题菜单 ---------- */
+    .theme-menu {
+        min-width: 160px;
+    }
+
+    .theme-toggle {
+        width: 38px;
+        height: 38px;
+    }
+
+    /* ---------- 底部 ---------- */
+    .site-footer {
+        padding: 20px 0;
+        font-size: 12px;
+    }
+
+    /* ---------- 灯箱 ---------- */
+    .lightbox-close {
+        top: 12px;
+        right: 16px;
+        font-size: 32px;
+    }
+}
+
+/* 超小屏（<380px）再收紧一点 */
+@media (max-width: 380px) {
+    .site-title {
+        font-size: 22px;
+    }
+    .site-subtitle {
+        font-size: 13px;
+    }
+    .nav-link {
+        font-size: 14px;
+        padding: 10px 14px;
+    }
+    .post-item-icon {
+        width: 34px;
+        height: 34px;
+    }
+    .post-item-title {
+        font-size: 14px;
+    }
 }
