@@ -325,6 +325,7 @@ a:hover {
 .theme-switcher {
     position: relative;
     flex-shrink: 0;
+    z-index: 600;
 }
 
 .theme-toggle {
@@ -362,13 +363,14 @@ a:hover {
     visibility: hidden;
     transform: translateY(-8px);
     transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
-    z-index: 100;
+    z-index: 999999;
 }
 
 .theme-menu.show {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+    z-index: 999999;
 }
 
 .theme-menu-title {
