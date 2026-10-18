@@ -5,140 +5,6 @@
     padding: 0;
 }
 
-/* ===== 主题：星夜蓝 ===== */
-:root, .theme-blue {
-    --bg: #0a1628;
-    --bg-card: #12213a;
-    --bg-card-hover: #172a48;
-    --border: #1e3355;
-    --text: #e0e8f5;
-    --text-dim: #7a8ba8;
-    --primary: #4a9eff;
-    --primary-hover: #6ab0ff;
-    --glow: rgba(74, 158, 255, 0.15);
-    --glow-strong: rgba(74, 158, 255, 0.4);
-    --pre-bg: #060f1c;
-    --code-color: #7ec8ff;
-    --tag-bg: rgba(74, 158, 255, 0.14);
-    --tag-color: #7ec8ff;
-    --radius: 10px;
-    --nav-bg: rgba(10, 22, 40, 0.85);
-}
-
-/* ===== 主题：幻紫 ===== */
-.theme-purple {
-    --bg: #160a26;
-    --bg-card: #221038;
-    --bg-card-hover: #2c1548;
-    --border: #3a1e5c;
-    --text: #ede0ff;
-    --text-dim: #9a7fba;
-    --primary: #b166ff;
-    --primary-hover: #c488ff;
-    --glow: rgba(177, 102, 255, 0.18);
-    --glow-strong: rgba(177, 102, 255, 0.45);
-    --pre-bg: #0c0517;
-    --code-color: #d8b4fe;
-    --tag-bg: rgba(177, 102, 255, 0.14);
-    --tag-color: #d8b4fe;
-    --nav-bg: rgba(22, 10, 38, 0.85);
-}
-
-/* ===== 主题：翠竹 ===== */
-.theme-green {
-    --bg: #061a12;
-    --bg-card: #0d281c;
-    --bg-card-hover: #133526;
-    --border: #1a4832;
-    --text: #dcf0e5;
-    --text-dim: #6d9c85;
-    --primary: #22d38a;
-    --primary-hover: #4ade9f;
-    --glow: rgba(34, 211, 138, 0.15);
-    --glow-strong: rgba(34, 211, 138, 0.42);
-    --pre-bg: #030d08;
-    --code-color: #6ee7b7;
-    --tag-bg: rgba(34, 211, 138, 0.14);
-    --tag-color: #6ee7b7;
-    --nav-bg: rgba(6, 26, 18, 0.85);
-}
-
-/* ===== 主题：橙霞 ===== */
-.theme-orange {
-    --bg: #1a0e05;
-    --bg-card: #2a1708;
-    --bg-card-hover: #3a200c;
-    --border: #4d2b10;
-    --text: #f5e4d2;
-    --text-dim: #b08d6a;
-    --primary: #ff8a3d;
-    --primary-hover: #ffa565;
-    --glow: rgba(255, 138, 61, 0.15);
-    --glow-strong: rgba(255, 138, 61, 0.42);
-    --pre-bg: #0d0602;
-    --code-color: #fdba74;
-    --tag-bg: rgba(255, 138, 61, 0.14);
-    --tag-color: #fdba74;
-    --nav-bg: rgba(26, 14, 5, 0.85);
-}
-
-/* ===== 主题：玫红 ===== */
-.theme-pink {
-    --bg: #1c0812;
-    --bg-card: #2b0e1c;
-    --bg-card-hover: #3d1428;
-    --border: #521a35;
-    --text: #f5dce8;
-    --text-dim: #b37e98;
-    --primary: #ff3d8f;
-    --primary-hover: #ff6baa;
-    --glow: rgba(255, 61, 143, 0.16);
-    --glow-strong: rgba(255, 61, 143, 0.42);
-    --pre-bg: #0e0409;
-    --code-color: #f9a8d4;
-    --tag-bg: rgba(255, 61, 143, 0.14);
-    --tag-color: #f9a8d4;
-    --nav-bg: rgba(28, 8, 18, 0.85);
-}
-
-/* ===== 主题：天青 ===== */
-.theme-cyan {
-    --bg: #04181e;
-    --bg-card: #082630;
-    --bg-card-hover: #0d3542;
-    --border: #134855;
-    --text: #d6ecf2;
-    --text-dim: #6e9ba8;
-    --primary: #22d4e8;
-    --primary-hover: #56e1f2;
-    --glow: rgba(34, 212, 232, 0.15);
-    --glow-strong: rgba(34, 212, 232, 0.42);
-    --pre-bg: #020a0d;
-    --code-color: #67e8f9;
-    --tag-bg: rgba(34, 212, 232, 0.14);
-    --tag-color: #67e8f9;
-    --nav-bg: rgba(4, 24, 30, 0.85);
-}
-
-/* ===== 主题：白昼 ===== */
-.theme-light {
-    --bg: #f5f7fa;
-    --bg-card: #ffffff;
-    --bg-card-hover: #eef3fa;
-    --border: #dfe5ed;
-    --text: #0f1a2e;
-    --text-dim: #64748b;
-    --primary: #3b82f6;
-    --primary-hover: #60a5fa;
-    --glow: rgba(59, 130, 246, 0.06);
-    --glow-strong: rgba(59, 130, 246, 0.28);
-    --pre-bg: #f0f4f9;
-    --code-color: #d6336c;
-    --tag-bg: rgba(59, 130, 246, 0.1);
-    --tag-color: #2563eb;
-    --nav-bg: rgba(255, 255, 255, 0.85);
-}
-
 /* ===== 全局 ===== */
 html {
     overflow-y: scroll;
@@ -226,7 +92,6 @@ a:hover {
     gap: 8px;
 }
 
-/* 汉堡按钮（默认隐藏） */
 .nav-toggle {
     display: none;
     width: 40px;
@@ -600,7 +465,7 @@ a:hover {
     font-size: 12px;
 }
 
-/* ===== 公告 / 网站更新记录列表（长条）===== */
+/* ===== 公告 / 网站更新记录列表 ===== */
 .post-list {
     display: flex;
     flex-direction: column;
@@ -917,7 +782,7 @@ a:hover {
     box-shadow: 0 0 16px var(--glow);
 }
 
-/* ===== Tab 标签栏（详情页内）===== */
+/* ===== Tab 标签栏 ===== */
 .tabs {
     display: flex;
     gap: 4px;
@@ -965,7 +830,6 @@ a:hover {
     box-shadow: 0 0 12px var(--glow-strong);
 }
 
-/* ===== Tab 内容 ===== */
 .tab-panel {
     display: none;
 }
@@ -995,7 +859,7 @@ a:hover {
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 24px var(--glow);
 }
 
-/* ===== README / CHANGELOG / 公告内容 ===== */
+/* ===== README ===== */
 .readme {
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -1150,26 +1014,23 @@ a:hover {
 }
 
 /* =====================================================
-   响应式：移动端
+   响应式
    ===================================================== */
 @media (max-width: 768px) {
     .container {
         padding: 0 16px;
     }
 
-    /* ---------- 导航栏 ---------- */
     .site-nav-inner {
         padding: 0 12px;
         gap: 8px;
         position: relative;
     }
 
-    /* 显示汉堡按钮 */
     .nav-toggle {
         display: flex;
     }
 
-    /* 导航链接变成下拉面板 */
     .nav-links {
         position: absolute;
         top: 100%;
@@ -1179,11 +1040,9 @@ a:hover {
         align-items: stretch;
         gap: 2px;
         padding: 8px;
-        background: var(--nav-bg);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: var(--nav-solid);
         border-bottom: 1px solid var(--border);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         opacity: 0;
         visibility: hidden;
         transform: translateY(-8px);
@@ -1213,12 +1072,10 @@ a:hover {
         display: none;
     }
 
-    /* 主题按钮推到最右 */
     .theme-switcher {
         margin-left: auto;
     }
 
-    /* ---------- 头部 ---------- */
     .site-header {
         padding: 36px 0 24px;
         margin-bottom: 30px;
@@ -1241,7 +1098,6 @@ a:hover {
         gap: 12px;
     }
 
-    /* ---------- 首页 ---------- */
     .toolbar {
         gap: 10px;
     }
@@ -1292,7 +1148,6 @@ a:hover {
         font-size: 13px;
     }
 
-    /* ---------- 插件详情页 ---------- */
     .plugin-detail-header {
         flex-direction: column;
         gap: 16px;
@@ -1333,7 +1188,6 @@ a:hover {
         font-size: 14px;
     }
 
-    /* ---------- 截图 ---------- */
     .screenshots {
         grid-template-columns: 1fr;
         gap: 12px;
@@ -1344,22 +1198,15 @@ a:hover {
         transform: none;
     }
 
-    /* ---------- README ---------- */
     .readme {
         padding: 20px 16px;
         margin-bottom: 40px;
         font-size: 14px;
     }
 
-    .readme h1 {
-        font-size: 22px;
-    }
-    .readme h2 {
-        font-size: 19px;
-    }
-    .readme h3 {
-        font-size: 16px;
-    }
+    .readme h1 { font-size: 22px; }
+    .readme h2 { font-size: 19px; }
+    .readme h3 { font-size: 16px; }
 
     .readme pre {
         padding: 12px;
@@ -1383,7 +1230,6 @@ a:hover {
         padding: 6px 10px;
     }
 
-    /* ---------- 公告 / 网站更新记录列表 ---------- */
     .post-list {
         gap: 10px;
         margin-bottom: 40px;
@@ -1421,7 +1267,6 @@ a:hover {
         display: none;
     }
 
-    /* ---------- 运营团队 ---------- */
     .team-grid {
         grid-template-columns: 1fr;
         gap: 14px;
@@ -1455,7 +1300,6 @@ a:hover {
         font-size: 13px;
     }
 
-    /* ---------- 主题菜单 ---------- */
     .theme-menu {
         min-width: 160px;
     }
@@ -1465,13 +1309,11 @@ a:hover {
         height: 38px;
     }
 
-    /* ---------- 底部 ---------- */
     .site-footer {
         padding: 20px 0;
         font-size: 12px;
     }
 
-    /* ---------- 灯箱 ---------- */
     .lightbox-close {
         top: 12px;
         right: 16px;
@@ -1479,7 +1321,6 @@ a:hover {
     }
 }
 
-/* 超小屏（<380px）再收紧一点 */
 @media (max-width: 380px) {
     .site-title {
         font-size: 22px;

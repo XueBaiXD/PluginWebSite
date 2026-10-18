@@ -1,0 +1,19 @@
+.theme-pink {
+    --bg: #1c0812;
+    --bg-card: #2b0e1c;
+    --bg-card-hover: #3d1428;
+    --border: #521a35;
+    --text: #f5dce8;
+    --text-dim: #b37e98;
+    --primary: #ff3d8f;
+    --primary-hover: #ff6baa;
+    --glow: rgba(255, 61, 143, 0.16);
+    --glow-strong: rgba(255, 61, 143, 0.42);
+    --pre-bg: #0e0409;
+    --code-color: #f9a8d4;
+    --tag-bg: rgba(255, 61, 143, 0.14);
+    --tag-color: #f9a8d4;
+    --nav-bg: rgba(28, 8, 18, 0.85);
+    --nav-solid: #1c0812;
+    --radius: 10px;
+}

@@ -30,6 +30,21 @@
     "source": "https://github.com/XueBaiXD/FactorySimulator"
   },
   {
+    "id": "BaiWareHouse",
+    "name": "BaiWareHouse",
+    "description": "一个配置方便，简洁，好用的仓库插件！绝对好用！",
+    "version": "1.0.3",
+    "author": "XueBaiXD",
+    "platform": "Bukkit / Paper / Spigot 1.21.11 (仅测试该版本)",
+    "icon": "images/plugin-icon-normal.png",
+    "tags": ["娱乐","玩法","工具"],
+    "screenshots": "",
+    "readme": "readmes/BaiWareHouse.md",
+    "changelog": "",
+    "download": "downloads/BaiWareHouse-1.0.3.zip",
+    "source": ""
+  },
+  {
     "id": "BungeeMotd",
     "name": "BungeeMotd",
     "description": "融合了ColorMotd，Bungeei，FakePlayer于一体的超级石山插件！",

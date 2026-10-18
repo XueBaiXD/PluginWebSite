@@ -4,8 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>雪白的插件小屋</title>
-    <link rel="stylesheet" href="css/style.css">
+    <!-- 提前设置主题 class，避免闪烁 -->
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('BaiReplay-theme') || 'blue';
+                document.documentElement.className = 'theme-' + saved;
+            } catch (e) {}
+        })();
+    </script>
+
+    <!-- 主题变量 -->
+    <link rel="stylesheet" href="css/themes/blue.css">
+    <link rel="stylesheet" href="css/themes/purple.css">
+    <link rel="stylesheet" href="css/themes/green.css">
+    <link rel="stylesheet" href="css/themes/orange.css">
+    <link rel="stylesheet" href="css/themes/pink.css">
+    <link rel="stylesheet" href="css/themes/cyan.css">
+    <link rel="stylesheet" href="css/themes/light.css">
+
+    <!-- 主样式 -->
+    <link rel="stylesheet" href="css/base.css">
+
+    <!-- 页面专属 -->
     <link rel="icon" type="image/png" href="images/favicon.png">
+    <!-- plugin.html / post.html / announcements.html / site-changelog.html 额外加 highlight.js 的样式 -->
 </head>
 <body data-list="announcements">
 

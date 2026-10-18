@@ -1,0 +1,19 @@
+.theme-orange {
+    --bg: #1a0e05;
+    --bg-card: #2a1708;
+    --bg-card-hover: #3a200c;
+    --border: #4d2b10;
+    --text: #f5e4d2;
+    --text-dim: #b08d6a;
+    --primary: #ff8a3d;
+    --primary-hover: #ffa565;
+    --glow: rgba(255, 138, 61, 0.15);
+    --glow-strong: rgba(255, 138, 61, 0.42);
+    --pre-bg: #0d0602;
+    --code-color: #fdba74;
+    --tag-bg: rgba(255, 138, 61, 0.14);
+    --tag-color: #fdba74;
+    --nav-bg: rgba(26, 14, 5, 0.85);
+    --nav-solid: #1a0e05;
+    --radius: 10px;
+}

@@ -1,0 +1,19 @@
+.theme-cyan {
+    --bg: #04181e;
+    --bg-card: #082630;
+    --bg-card-hover: #0d3542;
+    --border: #134855;
+    --text: #d6ecf2;
+    --text-dim: #6e9ba8;
+    --primary: #22d4e8;
+    --primary-hover: #56e1f2;
+    --glow: rgba(34, 212, 232, 0.15);
+    --glow-strong: rgba(34, 212, 232, 0.42);
+    --pre-bg: #020a0d;
+    --code-color: #67e8f9;
+    --tag-bg: rgba(34, 212, 232, 0.14);
+    --tag-color: #67e8f9;
+    --nav-bg: rgba(4, 24, 30, 0.85);
+    --nav-solid: #04181e;
+    --radius: 10px;
+}

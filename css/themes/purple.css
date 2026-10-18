@@ -1,0 +1,19 @@
+.theme-purple {
+    --bg: #160a26;
+    --bg-card: #221038;
+    --bg-card-hover: #2c1548;
+    --border: #3a1e5c;
+    --text: #ede0ff;
+    --text-dim: #9a7fba;
+    --primary: #b166ff;
+    --primary-hover: #c488ff;
+    --glow: rgba(177, 102, 255, 0.18);
+    --glow-strong: rgba(177, 102, 255, 0.45);
+    --pre-bg: #0c0517;
+    --code-color: #d8b4fe;
+    --tag-bg: rgba(177, 102, 255, 0.14);
+    --tag-color: #d8b4fe;
+    --nav-bg: rgba(22, 10, 38, 0.85);
+    --nav-solid: #160a26;
+    --radius: 10px;
+}

@@ -1,0 +1,19 @@
+.theme-green {
+    --bg: #061a12;
+    --bg-card: #0d281c;
+    --bg-card-hover: #133526;
+    --border: #1a4832;
+    --text: #dcf0e5;
+    --text-dim: #6d9c85;
+    --primary: #22d38a;
+    --primary-hover: #4ade9f;
+    --glow: rgba(34, 211, 138, 0.15);
+    --glow-strong: rgba(34, 211, 138, 0.42);
+    --pre-bg: #030d08;
+    --code-color: #6ee7b7;
+    --tag-bg: rgba(34, 211, 138, 0.14);
+    --tag-color: #6ee7b7;
+    --nav-bg: rgba(6, 26, 18, 0.85);
+    --nav-solid: #061a12;
+    --radius: 10px;
+}

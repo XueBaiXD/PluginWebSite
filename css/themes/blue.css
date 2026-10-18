@@ -1,0 +1,19 @@
+.theme-blue {
+    --bg: #0a1628;
+    --bg-card: #12213a;
+    --bg-card-hover: #172a48;
+    --border: #1e3355;
+    --text: #e0e8f5;
+    --text-dim: #7a8ba8;
+    --primary: #4a9eff;
+    --primary-hover: #6ab0ff;
+    --glow: rgba(74, 158, 255, 0.15);
+    --glow-strong: rgba(74, 158, 255, 0.4);
+    --pre-bg: #060f1c;
+    --code-color: #7ec8ff;
+    --tag-bg: rgba(74, 158, 255, 0.14);
+    --tag-color: #7ec8ff;
+    --nav-bg: rgba(10, 22, 40, 0.85);
+    --nav-solid: #0a1628;
+    --radius: 10px;
+}
